@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico de TAs</title>
+  <style>
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    h1 { text-align: center; color: #333; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+    th { background: #2196F3; color: white; }
+    tr:hover { background: #f1f1f1; }
+    .duplicate { background-color: #fff3b0; } /* amarelo claro para duplicados */
+    .button-back { margin: 20px auto; display: block; padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Histórico de TAs</h1>
+  <button class="button-back" onclick="window.location.href='index.html'">Voltar</button>
+
+  <table id="taTable">
+    <thead>
+      <tr><th>TA</th><th>Prefixo</th><th>Operadora</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>TA1</td><td>210000</td><td>Claro</td></tr>
+      <tr><td>TA2</td><td>220000</td><td>Oi</td></tr>
+      <tr><td>TA3</td><td>230000</td><td>Tim</td></tr>
+      <tr><td>TA4</td><td>210000</td><td>Claro</td></tr> <!-- duplicado de TA1 -->
+      <tr><td>TA5</td><td>250000</td><td>Vivo</td></tr>
+      <tr><td>TA6</td><td>310000</td><td>Oi</td></tr>
+      <tr><td>TA7</td><td>320000</td><td>Oi</td></tr>
+      <tr><td>TA8</td><td>330000</td><td>Tim</td></tr>
+      <tr><td>TA9</td><td>310000</td><td>Oi</td></tr> <!-- duplicado de TA6 -->
+      <tr><td>TA10</td><td>350000</td><td>Vivo</td></tr>
+      <tr><td>TA11</td><td>410000</td><td>Tim</td></tr>
+      <tr><td>TA12</td><td>420000</td><td>Tim</td></tr>
+      <tr><td>TA13</td><td>430000</td><td>Claro</td></tr>
+      <tr><td>TA14</td><td>440000</td><td>Vivo</td></tr>
+      <tr><td>TA15</td><td>410000</td><td>Tim</td></tr> <!-- duplicado de TA11 -->
+      <tr><td>TA16</td><td>510000</td><td>Vivo</td></tr>
+      <tr><td>TA17</td><td>520000</td><td>Vivo</td></tr>
+      <tr><td>TA18</td><td>530000</td><td>Tim</td></tr>
+      <tr><td>TA19</td><td>520000</td><td>Vivo</td></tr> <!-- duplicado de TA17 -->
+      <tr><td>TA20</td><td>550000</td><td>Claro</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    // Detectar duplicados de CN+Operadora e marcar com classe
+    const table = document.getElementById('taTable');
+    const rows = table.getElementsByTagName('tr');
+    const seen = {};
+
+    for (let i = 1; i < rows.length; i++) {
+      const prefixo = rows[i].cells[1].textContent.trim();
+      const operadora = rows[i].cells[2].textContent.trim();
+      const key = prefixo + '_' + operadora;
+
+      if (seen[key]) {
+        rows[i].classList.add('duplicate');
+        seen[key].classList.add('duplicate'); // marca o primeiro também
+      } else {
+        seen[key] = rows[i];
+      }
+    }
+  </script>
+</body>
+</html>
